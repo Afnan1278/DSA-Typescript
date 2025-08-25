@@ -1,60 +1,54 @@
-import { topKFrequent, topKFrequentHeap } from './top-k-frequent-elements';
+import { mostFrequentElement } from './top-k-frequent-elements';
 
-describe('Top K Frequent Elements', () => {
-    describe('topKFrequent (Bucket Sort)', () => {
-        test('should return top k frequent elements - example 1', () => {
-            const nums = [1, 1, 1, 2, 2, 3];
-            const k = 2;
-            const result = topKFrequent(nums, k);
 
-            expect(result).toHaveLength(2);
-            expect(result).toContain(1);
-            expect(result).toContain(2);
-        });
+describe('mostFrequentElement', () => {
+    test('should return the most frequent element - case 1', () => {
+        const nums = [1, 1, 1, 2, 2, 3];
+        const result = mostFrequentElement(nums);
 
-        test('should return top k frequent elements - example 2', () => {
-            const nums = [1];
-            const k = 1;
-            const result = topKFrequent(nums, k);
-
-            expect(result).toEqual([1]);
-        });
-
-        test('should handle multiple elements with same frequency', () => {
-            const nums = [1, 2, 3, 4];
-            const k = 2;
-            const result = topKFrequent(nums, k);
-
-            expect(result).toHaveLength(2);
-        });
-
-        test('should handle k equal to array length', () => {
-            const nums = [1, 2, 3];
-            const k = 3;
-            const result = topKFrequent(nums, k);
-
-            expect(result).toHaveLength(3);
-            expect(result.sort()).toEqual([1, 2, 3]);
-        });
+        expect(result).toBe(1);
     });
 
-    describe('topKFrequentHeap (Heap Sort)', () => {
-        test('should return top k frequent elements - example 1', () => {
-            const nums = [1, 1, 1, 2, 2, 3];
-            const k = 2;
-            const result = topKFrequentHeap(nums, k);
+    test('should return the most frequent element - single element', () => {
+        const nums = [1];
+        const result = mostFrequentElement(nums);
 
-            expect(result).toHaveLength(2);
-            expect(result).toContain(1);
-            expect(result).toContain(2);
-        });
+        expect(result).toBe(1);
+    });
 
-        test('should return top k frequent elements - example 2', () => {
-            const nums = [1];
-            const k = 1;
-            const result = topKFrequentHeap(nums, k);
+    test('should handle multiple occurrences', () => {
+        const nums = [3, 5, 2, 3, 2, 2, 2, 5, 5];
+        const result = mostFrequentElement(nums);
 
-            expect(result).toEqual([1]);
-        });
+        expect(result).toBe(2); // 2 appears 4 times
+    });
+
+    test('should return null for empty array', () => {
+        const nums: number[] = [];
+        const result = mostFrequentElement(nums);
+
+        expect(result).toBeNull();
+    });
+
+    test('should handle tie by returning first encountered max frequency element', () => {
+        const nums = [1, 1, 2, 2];
+        const result = mostFrequentElement(nums);
+
+        expect(result).toBe(1); // Both have frequency 2, but 1 was encountered first
+    });
+
+    test('should handle array with all same elements', () => {
+        const nums = [5, 5, 5, 5];
+        const result = mostFrequentElement(nums);
+
+        expect(result).toBe(5);
+    });
+
+    test('should handle array with all different elements', () => {
+        const nums = [1, 2, 3, 4, 5];
+        const result = mostFrequentElement(nums);
+
+        expect(result).toBe(1); // First element when all have same frequency
     });
 });
+

@@ -17,52 +17,36 @@
  */
 
 /**
- * Solution using HashMap and Bucket Sort - O(n) time complexity
- */
-export function topKFrequent(nums: number[], k: number): number[] {
-    // Step 1: Count frequency of each element
-    const frequencyMap = new Map<number, number>();
+ * Solution using HashMap - O(n) time complexity
+ * 
+ * create a map where each number will have it's frequency
+ * create a variabe for max, update max if possible
+ * at the end of loop return max
 
-    for (const num of nums) {
-        frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
-    }
+ Edge case: if arr length is 0
+*/
+export const mostFrequentElement = (arr: number[]): number | null => {
 
-    // Step 2: Create buckets where index represents frequency
-    const buckets: number[][] = Array(nums.length + 1)
-        .fill(null)
-        .map(() => []);
+    if (arr.length === 0)
+        return null
 
-    for (const [num, freq] of frequencyMap) {
-        buckets[freq]?.push(num);
-    }
+    const freqMap = new Map<number, number>()
+    let maxFreq = 0
+    let maxFreqNumber: number = arr[0]!  // We know arr[0] exists because length > 0
 
-    // Step 3: Collect k most frequent elements from buckets (right to left)
-    const result: number[] = [];
+    for (let i = 0; i < arr.length; i++) {
+        const currentElement = arr[i]!  // We know arr[i] exists because i < arr.length
+        const currentCount = freqMap.get(currentElement) || 0
+        const newCount = currentCount + 1
 
-    for (let i = buckets.length - 1; i >= 0 && result.length < k; i--) {
-        if (buckets[i] && buckets[i]!.length > 0) {
-            result.push(...buckets[i]!);
+        freqMap.set(currentElement, newCount)
+        console.log(currentElement, newCount, maxFreq)
+        if (newCount > maxFreq) {
+            maxFreq = newCount
+            maxFreqNumber = currentElement
         }
     }
+    return maxFreqNumber
 
-    return result.slice(0, k);
 }
 
-/**
- * Alternative solution using HashMap and Heap - O(n log k) time complexity
- */
-export function topKFrequentHeap(nums: number[], k: number): number[] {
-    // Count frequencies
-    const frequencyMap = new Map<number, number>();
-
-    for (const num of nums) {
-        frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
-    }
-
-    // Convert to array and sort by frequency
-    const frequencies = Array.from(frequencyMap.entries());
-    frequencies.sort((a, b) => b[1] - a[1]);
-
-    // Return top k elements
-    return frequencies.slice(0, k).map(([num]) => num);
-}
