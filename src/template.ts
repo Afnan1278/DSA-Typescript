@@ -24,14 +24,14 @@
  * Solution approach description
  */
 export function problemSolution(_params: any): any {
-  // TODO: Implement solution
-  throw new Error('Not implemented');
+    // TODO: Implement solution
+    throw new Error('Not implemented');
 }
 
 /**
  * Alternative solution (if applicable)
  */
 export function problemSolutionAlternative(_params: any): any {
-  // TODO: Implement alternative solution
-  throw new Error('Not implemented');
+    // TODO: Implement alternative solution
+    throw new Error('Not implemented');
 }
